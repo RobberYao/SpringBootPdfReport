@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="基本类型电子保单" language="groovy" pageWidth="595" pageHeight="660" columnWidth="503" leftMargin="46" rightMargin="46" topMargin="45" bottomMargin="45" resourceBundle="com.picclife.i18n.edocument">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="com.siebre.util.EnumUtils"/>
+	<style name="def" isDefault="true" pattern="" fontName="微软雅黑" fontSize="10">
+		<box leftPadding="5" rightPadding="5"/>
+	</style>
+	<style name="title" style="def" fontSize="15" isBold="true"/>
+	<style name="bord" style="def">
+		<box>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="bold" style="def"/>
+	<style name="bold_bord" style="bord"/>
+	<parameter name="policy" class="com.siebre.policy.InsurancePolicy"/>
+	<variable name="applicant" class="com.siebre.policy.PartyRoleInPolicy">
+		<variableExpression><![CDATA[$P{policy}.getRoleOfKind("Applicant")]]></variableExpression>
+	</variable>
+	<variable name="insured" class="com.siebre.policy.PartyRoleInPolicy">
+		<variableExpression><![CDATA[$P{policy}.getRoleOfKind("Insured")]]></variableExpression>
+	</variable>
+	<variable name="beneficiary" class="com.siebre.policy.PartyRoleInPolicy">
+		<variableExpression><![CDATA[$P{policy}.getRoleOfKind("Beneficiary")]]></variableExpression>
+	</variable>
+	<variable name="components" class="java.util.List">
+		<variableExpression><![CDATA[$P{policy}.sortedComponents]]></variableExpression>
+	</variable>
+	<variable name="dfl" class="java.text.DateFormat">
+		<variableExpression><![CDATA[DateFormat.getDateInstance(DateFormat.LONG)]]></variableExpression>
+	</variable>
+	<variable name="desMap" class="java.util.HashMap">
+		<variableExpression><![CDATA[[
+"SXGGXN":"1、仅父母可为未成年子女投保含身故责任的人身保险。在被保险人成年之前，各保险公司约定及实际给付的累计身故保险金额上限为：未满10周岁时以20万元为限，已满10周岁但未满18周岁时以50万元为限。航空意外和重大自然灾害意外身故保险金额不计入前述限额。\r\n2、同一保障期间内每一成年被保险人仅限购买本方案2份，未成年被保险人仅限购买1份，多购部分本公司不承担保险责任。\r\n3、《人保寿险附加安祥意外伤害住院定额给付医疗保险》仅承担被保险人在乘坐主合同约定的公共交通工具上发生的意外伤害责任。",
+"SXGGXNB":"1、仅父母可为未成年子女投保含身故责任的人身保险。在被保险人成年之前，各保险公司约定及实际给付的累计身故保险金额上限为：未满10周岁时以20万元为限，已满10周岁但未满18周岁时以50万元为限。航空意外和重大自然灾害意外身故保险金额不计入前述限额。\r\n2、同一保障期间内每一成年被保险人仅限购买本方案2份，未成年被保险人仅限购买1份，多购部分本公司不承担保险责任。\r\n3、《人保寿险附加安祥意外伤害住院定额给付医疗保险》仅承担被保险人在乘坐主合同约定的公共交通工具上发生的意外伤害责任。",
+"SXGGXNC":"1、仅父母可为未成年子女投保含身故责任的人身保险。在被保险人成年之前，各保险公司约定及实际给付的累计身故保险金额上限为：未满10周岁时以20万元为限，已满10周岁但未满18周岁时以50万元为限。航空意外和重大自然灾害意外身故保险金额不计入前述限额。\r\n2、同一保障期间内每一成年被保险人仅限购买本方案2份，未成年被保险人仅限购买1份，多购部分本公司不承担保险责任。\r\n3、《人保寿险附加安祥意外伤害住院定额给付医疗保险》仅承担被保险人在乘坐主合同约定的公共交通工具上发生的意外伤害责任。",
+"SXGGXNF":"1、仅父母可为未成年子女投保含身故责任的人身保险。在被保险人成年之前，各保险公司约定及实际给付的累计身故保险金额上限为：未满10周岁时以20万元为限，已满10周岁但未满18周岁时以50万元为限。航空意外和重大自然灾害意外身故保险金额不计入前述限额。\r\n2、同一保障期间内每一成年被保险人仅限购买本方案2份，未成年被保险人仅限购买1份，多购部分本公司不承担保险责任。\r\n3、《人保寿险附加安祥意外伤害住院定额给付医疗保险》仅承担被保险人在乘坐主合同约定的公共交通工具上发生的意外伤害责任。",
+"SXGGXNJ":"1、仅父母可为未成年子女投保含身故责任的人身保险。在被保险人成年之前，各保险公司约定及实际给付的累计身故保险金额上限为：未满10周岁时以20万元为限，已满10周岁但未满18周岁时以50万元为限。航空意外和重大自然灾害意外身故保险金额不计入前述限额。\r\n2、同一保障期间内每一成年被保险人仅限购买本方案2份，未成年被保险人仅限购买1份，多购部分本公司不承担保险责任。\r\n3、《人保寿险附加安祥意外伤害住院定额给付医疗保险》仅承担被保险人在乘坐主合同约定的公共交通工具上发生的意外伤害责任。",
+"SXGGXNM":"1、仅父母可为未成年子女投保含身故责任的人身保险。在被保险人成年之前，各保险公司约定及实际给付的累计身故保险金额上限为：未满10周岁时以20万元为限，已满10周岁但未满18周岁时以50万元为限。航空意外和重大自然灾害意外身故保险金额不计入前述限额。\r\n2、同一保障期间内每一成年被保险人仅限购买本方案2份，未成年被保险人仅限购买1份，多购部分本公司不承担保险责任。\r\n3、《人保寿险附加安祥意外伤害住院定额给付医疗保险》仅承担被保险人在乘坐主合同约定的公共交通工具上发生的意外伤害责任。",
+]]]></variableExpression>
+	</variable>
+	<title>
+		<band height="75" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="265" height="24"/>
+				<imageExpression><![CDATA["image/picc.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="title" x="0" y="37" width="503" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policy}.spec.name]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold" x="319" y="58" width="56" height="15"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[保单号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="58" width="128" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policy}.policyNumber]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="308" splitType="Stretch">
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="0" width="76" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[投保人]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="76" y="0" width="76" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{applicant}.fullName]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="152" y="0" width="60" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[性别]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="212" y="0" width="60" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[str(EnumUtils.getMessageCode($V{applicant}.gender))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="272" y="0" width="65" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[出生日期]]></text>
+			</staticText>
+			<textField pattern="yyyy年MM月dd日">
+				<reportElement style="bord" x="337" y="0" width="166" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{applicant}.birthDate]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="14" width="76" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[证件类型]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="76" y="14" width="76" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[str(EnumUtils.getMessageCode($V{applicant}.idType))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="152" y="14" width="60" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[证件号码]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="212" y="14" width="125" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{applicant}.idNumber]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="337" y="14" width="85" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[与被保险人关系]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="422" y="14" width="81" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[str(EnumUtils.getMessageCode($V{applicant}.relatedToRoleCode))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="28" width="76" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[被保人]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="76" y="28" width="76" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{insured}.fullName]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="152" y="28" width="60" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[性别]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="212" y="28" width="60" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[str(EnumUtils.getMessageCode($V{insured}.gender))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="272" y="28" width="65" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[出生日期]]></text>
+			</staticText>
+			<textField pattern="yyyy年MM月dd日">
+				<reportElement style="bord" x="337" y="28" width="166" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{insured}.birthDate]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="42" width="76" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[证件类型]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="76" y="42" width="76" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[str(EnumUtils.getMessageCode($V{insured}.idType))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="152" y="42" width="60" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[证件号码]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="212" y="42" width="291" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{insured}.idNumber]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="56" width="76" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[身故受益人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold_bord" x="152" y="56" width="60" height="14">
+					<printWhenExpression><![CDATA[$V{beneficiary}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[证件类型]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="212" y="56" width="125" height="14">
+					<printWhenExpression><![CDATA[$V{beneficiary}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[str(EnumUtils.getMessageCode($V{beneficiary}.idType))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="337" y="56" width="50" height="14">
+					<printWhenExpression><![CDATA[$V{beneficiary}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[证件号码]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="387" y="56" width="116" height="14">
+					<printWhenExpression><![CDATA[$V{beneficiary}!=null]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{beneficiary}.idNumber]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="bord" x="76" y="56" width="427" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{beneficiary}!=null?$V{beneficiary}.fullName:"被保险人身故时生存的配偶、父母、子女"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="84" width="342" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[保险费]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="342" y="84" width="161" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["人民币"+$P{policy}.grossPremium+"元"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="98" width="342" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[保险责任]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold_bord" x="342" y="98" width="161" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[保险金额（单位：元）]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="112" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[0].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[0].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="112" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[0].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[0].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="126" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[1].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[1].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="126" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[1].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[1].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="140" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[2].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[2].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="140" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[2].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[2].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="154" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[3].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[3].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="154" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[3].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[3].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="168" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[4].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[4].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="168" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[4].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[4].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="182" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[5].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[5].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="182" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[5].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[5].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="196" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[6].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[6].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="196" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[6].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[6].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="210" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[7].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[7].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="210" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[7].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[7].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="224" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[8].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[8].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="224" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[8].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[8].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="238" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[9].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[9].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="238" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[9].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[9].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" hyperlinkType="Reference" hyperlinkTarget="Blank">
+				<reportElement style="bold_bord" x="0" y="294" width="503" height="14"/>
+				<box topPadding="3" bottomPadding="3"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["相关条款：" + $P{policy}.spec.termsNameInfo + "\r\n阅读条款内容，包括保险责任及责任免除条款"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$P{policy}.spec.termsURLInfo]]></hyperlinkReferenceExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="70" width="76" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[保险期间]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="bord" x="76" y="70" width="427" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["从" + $V{dfl}.format($P{policy}.inceptionDate) + "零时起至" + $V{dfl}.format($P{policy}.plannedEndDate) + "二十四时止（北京时间）。"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="252" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[10].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[10].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="252" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[10].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[10].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="266" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[11].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[11].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="266" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[11].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[11].insuredAmount]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="280" width="342" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[12].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[12].spec.name]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="342" y="280" width="161" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{components}[12].insuredAmount != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{components}[12].insuredAmount]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="14">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="bord" x="0" y="0" width="503" height="14"/>
+				<box topPadding="3" bottomPadding="3"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["特别责任或说明：\r\n"+($V{desMap}.containsKey($P{policy}.spec.externalReference)?$V{desMap}.get($P{policy}.spec.externalReference):"") + ($P{policy}.specialDescription==null?"":$P{policy}.specialDescription)+"\r\n我公司偿付能力充足率达到监管要求，最近季度的综合偿付能力充足率、风险综合评级等信息详情请登陆公司网站www.picclife.com查看。"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="112">
+			<staticText>
+				<reportElement style="bord" x="0" y="0" width="503" height="70"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[投保人及被保险人声明：
+    本人已收到所投保险种保险条款，且已认真阅读并理解了保险条款，尤其是保险责任、责任免除、合同解除等条款内容，人保寿险销售人员已向本人说明保险合同内容，并就责任免除事项进行了单独说明。本人自愿投保本保险，并确认上述投保事项真实、准确，如有隐瞒或不实告知，保险人有权解除合同，并对保险合同解除前发生的保险事故不承担保险责任。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="70" width="66" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[签单日期]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement style="bord" x="66" y="70" width="146" height="28"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policy}.signedDate]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="265" y="84" width="92" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policy}.userName]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="419" y="70" width="84" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.intermediaryOrganization.simpleName]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold_bord" x="0" y="98" width="212" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[客户服务专线：4008895518]]></text>
+			</staticText>
+			<textField hyperlinkType="Reference" hyperlinkTarget="Blank">
+				<reportElement style="bold_bord" x="212" y="98" width="291" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["网址：www.e-picclife.com"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA["http://www.e-picclife.com"]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="274" y="70" width="83" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.internalOrganization.simpleName]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="bord" x="419" y="84" width="84" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.salerName]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bord" x="212" y="70" width="62" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[销售机构：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bord" x="212" y="84" width="53" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[经办人：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bord" x="357" y="84" width="62" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[销售人员：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bord" x="357" y="70" width="62" height="14"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[代办网点：]]></text>
+			</staticText>
+			<image>
+				<reportElement x="375" y="0" width="98" height="98"/>
+				<imageExpression><![CDATA["image/seal_policy.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>
