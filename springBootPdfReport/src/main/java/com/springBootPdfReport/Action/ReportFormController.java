@@ -100,16 +100,16 @@ public class ReportFormController extends WebContentGenerator{
 
 		String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
 
-		String jrxml = template + ".jrxml";
-		String jasper = template + ".jasper";
+		String jrxml = template + ".jrxml";//模版
+		String jasper = template + ".jasper";//?????
 
 		if (DEBUG || !new File(jasper).exists())
-			JasperCompileManager.compileReportToFile(jrxml, jasper);
+			JasperCompileManager.compileReportToFile(jrxml, jasper);//判断何意？
 
-		Connection conn = dataSource.getConnection();
+		Connection conn = dataSource.getConnection();//连接数据库？连接jasper？
 		
 		File sourceFile = new File(jasper);
-	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(sourceFile);
+	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(sourceFile);//load什么东西？模版？
 	    JRBaseFiller filler = JRFiller.createFiller(jasperReport);
 	    JasperPrint print = filler.fill(parameters, conn);
 
@@ -139,7 +139,6 @@ public class ReportFormController extends WebContentGenerator{
 
 			baos.writeTo(out);
 			out.flush();
-
 			out.close();
 			baos.close();
 		}

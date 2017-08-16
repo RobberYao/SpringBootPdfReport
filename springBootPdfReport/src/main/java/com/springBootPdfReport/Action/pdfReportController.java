@@ -40,9 +40,16 @@ public class pdfReportController {
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public String testQuery(HttpServletRequest request, HttpServletResponse response) {
 
-		String disTableName = labDisplayParamterService.findOneById(1).getDisplayTableName();
-		System.out.println("=======  "+disTableName);
-		return disTableName;
+		String disProbeNumber = labDisplayParamterService.findOneById(1).getDisProbeNumber();
+		System.out.println("=======  "+disProbeNumber);
+		return disProbeNumber;
 	}
+	
+	
+	
+	
+	
+	
+	
 
 }
