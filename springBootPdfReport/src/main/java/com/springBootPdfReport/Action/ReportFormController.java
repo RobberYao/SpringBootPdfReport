@@ -39,7 +39,7 @@ import org.springframework.web.servlet.support.WebContentGenerator;
 
 @SuppressWarnings("deprecation")
 @Controller
-public class ReportFormController extends WebContentGenerator{
+public class ReportFormController extends WebContentGenerator {
 
 	private static final int OUTPUT_BYTE_ARRAY_INITIAL_SIZE = 51200;
 
@@ -49,19 +49,20 @@ public class ReportFormController extends WebContentGenerator{
 	private DataSource dataSource;
 
 	@RequestMapping(value = "/rpt/{reportName}")
-	public void generateReport(HttpServletRequest request, HttpServletResponse response, ModelMap model, @PathVariable String reportName) throws Exception {
+	public void generateReport(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@PathVariable String reportName) throws Exception {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		Enumeration<String> pNames = request.getParameterNames();
 
 		while (pNames.hasMoreElements()) {
 			String name = pNames.nextElement();
 			String value = request.getParameter(name);
-			
+
 			if ("index".equals(name)) {
 				int intValue = Integer.parseInt(value);
 				if (intValue > 1)
 					parameters.put(name, intValue);
-			}else {
+			} else {
 				parameters.put(name, value);
 			}
 		}
@@ -82,7 +83,7 @@ public class ReportFormController extends WebContentGenerator{
 			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
 			exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-		} else if("pdf".equalsIgnoreCase(format)) { // pdf����
+		} else if ("pdf".equalsIgnoreCase(format)) { // pdf����
 			contentType = "application/pdf";
 			fileSuffix = ".pdf";
 			exporter = new JRPdfExporter();
@@ -98,22 +99,25 @@ public class ReportFormController extends WebContentGenerator{
 
 		response.setContentType(contentType);
 
-		String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
+		// String template = getServletContext().getRealPath("Report/jrxml/" +
+		// reportName);
+		String template = "testBlue";
+		System.out.println("template  " + template);
+		String jrxml = template + ".jrxml";// 模版
+		String jasper = template + ".jasper";// ?????
 
-		String jrxml = template + ".jrxml";//模版
-		String jasper = template + ".jasper";//?????
+		//if (DEBUG || !new File(jasper).exists()) {
+			JasperCompileManager.compileReportToFile(jrxml, jasper);// 判断何意？
+		//}
+		Connection conn = dataSource.getConnection();// 连接数据库？连接jasper？
 
-		if (DEBUG || !new File(jasper).exists())
-			JasperCompileManager.compileReportToFile(jrxml, jasper);//判断何意？
-
-		Connection conn = dataSource.getConnection();//连接数据库？连接jasper？
-		
 		File sourceFile = new File(jasper);
-	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(sourceFile);//load什么东西？模版？
-	    JRBaseFiller filler = JRFiller.createFiller(jasperReport);
-	    JasperPrint print = filler.fill(parameters, conn);
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(sourceFile);// load什么东西？模版？
+		JRBaseFiller filler = JRFiller.createFiller(jasperReport);
+		JasperPrint print = filler.fill(parameters, conn);
 
-		//JasperPrint print = JasperFillManager.fillReport(jasper, parameters, conn);
+		// JasperPrint print = JasperFillManager.fillReport(jasper, parameters,
+		// conn);
 
 		conn.close();
 
@@ -143,5 +147,5 @@ public class ReportFormController extends WebContentGenerator{
 			baos.close();
 		}
 	}
-	
+
 }

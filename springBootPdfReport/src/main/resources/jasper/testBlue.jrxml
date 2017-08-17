@@ -4,15 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT
-     *,
-     lab_displayparamter0101.`ID` AS lab_displayparamter0101_ID,
-     lab_displayparamter0101.`DISPROBENUMBER` AS lab_displayparamter0101_DISPROBENUMBER,
-     lab_displayparamter0101.`CREATEDON` AS lab_displayparamter0101_CREATEDON,
-     lab_displayparamter0101.`DISTEMPERATURE` AS lab_displayparamter0101_DISTEMPERATURE,
-     lab_displayparamter0101.`DISHUMIDITY` AS lab_displayparamter0101_DISHUMIDITY
-FROM
-     `lab_displayparamter0101` lab_displayparamter0101]]>
+		<![CDATA[SELECT * FROM  lab_displayparamter0101 where DISTEMPERATURE = 1]]>
 	</queryString>
 	<field name="DISPROBENUMBER" class="java.lang.String"/>
 	<field name="CREATEDON" class="java.sql.Timestamp"/>
