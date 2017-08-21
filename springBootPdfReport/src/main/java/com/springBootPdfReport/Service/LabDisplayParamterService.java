@@ -13,6 +13,6 @@ public interface LabDisplayParamterService {
 
 	LabDisplayParamter findOneById(int id);
 
-	List<LabDisplayParamter> findMore(String tableName, Date createdOn, Date stopEnd);
+	List<LabDisplayParamter> findMore(String tableName, String createdOn, String stopEnd);
 
 }

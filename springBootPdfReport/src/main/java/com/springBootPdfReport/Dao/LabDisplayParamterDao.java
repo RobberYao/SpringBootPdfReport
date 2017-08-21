@@ -9,5 +9,5 @@ public interface LabDisplayParamterDao {
 
 	LabDisplayParamter findOneById(int id);
 
-	List<LabDisplayParamter> findListItems(String tableName, Date createOn, Date stopEnd);
+	List<LabDisplayParamter> findListItems(String tableName, String createOn, String stopEnd);
 }

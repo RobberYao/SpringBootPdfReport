@@ -52,11 +52,11 @@ public class pdfReportController {
 		// return disProbeNumber;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 小写的mm表示的是分钟
-		String createdOn = "2017-07-18 10:09:28";
-		String stopEnd = "2017-07-19 10:09:28";
+		String tableName="lab_displayparamter0101";
+		String createdOn = "2017-07-15 10:09:28";
+		String stopEnd = "2017-07-16 10:09:28";
 
-		List list1 = labDisplayParamterService.findMore("lab.lab_displayparamter0101", DateUtils.strToDate(createdOn),
-				DateUtils.strToDate(stopEnd));
+		List list1 = labDisplayParamterService.findMore(tableName,createdOn,stopEnd);
 		System.out.println(list1.size());
 
 	}

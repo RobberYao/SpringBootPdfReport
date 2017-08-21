@@ -34,7 +34,7 @@ public class LabDisplayParamterServiceImpl implements LabDisplayParamterService 
 	}
 
 	@Override
-	public List<LabDisplayParamter> findMore(String tableName, Date createdOn, Date stopEnd) {
+	public List<LabDisplayParamter> findMore(String tableName, String createdOn, String stopEnd) {
 
 		return LabDisplayParamterDaoImpl.findListItems(tableName, createdOn, stopEnd);
 	}

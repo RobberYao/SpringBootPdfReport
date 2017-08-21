@@ -16,15 +16,15 @@ public class LabDisplayParamter {
 	private String createdOn;
 	private Double disTemperature;
 	private Double disHumidity;
-	private String displayTableName;
+	//private String displayTableName;
 
-	public String getDisplayTableName() {
-		return displayTableName;
-	}
-
-	public void setDisplayTableName(String displayTableName) {
-		this.displayTableName = displayTableName;
-	}
+//	public String getDisplayTableName() {
+//		return displayTableName;
+//	}
+//
+//	public void setDisplayTableName(String displayTableName) {
+//		this.displayTableName = displayTableName;
+//	}
 
 	public Integer getId() {
 		return id;
@@ -99,7 +99,7 @@ public class LabDisplayParamter {
 		this.createdOn = createdOn;
 		this.disTemperature = disTemperature;
 		this.disHumidity = disHumidity;
-		this.displayTableName = displayTableName;
+		//this.displayTableName = displayTableName;
 	}
 
 	public LabDisplayParamter() {
