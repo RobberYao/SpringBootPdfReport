@@ -1,5 +1,8 @@
 package com.springBootPdfReport.Dao;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,4 +33,15 @@ public class LabDisplayParamterDaoImpl implements LabDisplayParamterDao {
 		Object labDisplay = jdbcTemplate.queryForObject(sql, obj, new BeanPropertyRowMapper(LabDisplayParamter.class));
 		return (LabDisplayParamter) labDisplay;
 	}
+	
+	
+	public  List<LabDisplayParamter> findListItems(String tableName, Date createOn, Date stopEnd) {
+
+		String sql = "select * from ? where CREATEDON between ? and ? ;";
+		return jdbcTemplate.queryForList(sql, new Object[] { tableName, createOn, stopEnd }, LabDisplayParamter.class);
+
+	}
+	
+	
+	
 }

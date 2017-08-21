@@ -1,6 +1,8 @@
 package com.springBootPdfReport.Service;
 
 import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.springBootPdfReport.Dao.LabDisplayParamterDaoImpl;
 import com.springBootPdfReport.Model.LabDisplayConditions;
 import com.springBootPdfReport.Model.LabDisplayParamter;
+
 @Service
 public class LabDisplayParamterServiceImpl implements LabDisplayParamterService {
 	@Autowired
@@ -25,10 +28,15 @@ public class LabDisplayParamterServiceImpl implements LabDisplayParamterService 
 
 	@Override
 	public LabDisplayParamter findOneById(int id) {
-		
-		LabDisplayParamter display=LabDisplayParamterDaoImpl.findOneById(id);
-		
-		return display;
+
+		return LabDisplayParamterDaoImpl.findOneById(id);
+
+	}
+
+	@Override
+	public List<LabDisplayParamter> findMore(String tableName, Date createdOn, Date stopEnd) {
+
+		return LabDisplayParamterDaoImpl.findListItems(tableName, createdOn, stopEnd);
 	}
 
 }
