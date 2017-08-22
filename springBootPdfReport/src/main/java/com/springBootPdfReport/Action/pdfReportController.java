@@ -59,6 +59,9 @@ public class pdfReportController {
 		List list1 = labDisplayParamterService.findMore(tableName,createdOn,stopEnd);
 		System.out.println(list1.size());
 
+		
+		
+		
 	}
 
 }
