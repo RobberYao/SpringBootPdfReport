@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.jasperreports.JasperReportsUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.WebContentGenerator;
@@ -99,15 +100,18 @@ public class ReportFormController extends WebContentGenerator {
 
 		response.setContentType(contentType);
 
-		// String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
-		String template = "testBlue";
+		//String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
+		
+		File template = ResourceUtils.getFile("classpath:jasper/testBlue.jrxml");
+		
+		//String template = "testBlue";
 		System.out.println("template  " + template);
-		String jrxml = template + ".jrxml";// 模版
-		String jasper = template + ".jasper";// ?????
+		String jrxml = template.getName();// 模版
+		String jasper = template.getName().replaceAll("[.][^.]+$", "") + ".jasper";// ?????
 
-		//if (DEBUG || !new File(jasper).exists()) {
+		if (DEBUG || !new File(jasper).exists()) {
 			JasperCompileManager.compileReportToFile(jrxml, jasper);// 判断何意？
-		//}
+		}
 		Connection conn = dataSource.getConnection();// 连接数据库？连接jasper？
 
 		File sourceFile = new File(jasper);

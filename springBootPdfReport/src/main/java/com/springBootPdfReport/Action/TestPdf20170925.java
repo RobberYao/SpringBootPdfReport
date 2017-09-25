@@ -41,7 +41,7 @@ public class TestPdf20170925 {
 	         map.put("projectapproid", projectapproid);
 	          //输出流
 	          //OutputStream ous =response.getOutputStream();
-	         OutputStream ous=new FileOutputStream(arg0);
+	         OutputStream ous=new FileOutputStream("D://testBlue.jasper");
 	          //输出文件名
 	          String filenames="项目立项";
 	          //打印
