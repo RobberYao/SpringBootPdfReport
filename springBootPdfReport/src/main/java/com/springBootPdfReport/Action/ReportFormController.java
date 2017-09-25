@@ -76,19 +76,19 @@ public class ReportFormController extends WebContentGenerator {
 
 		boolean download = true;
 
-		if ("xls".equalsIgnoreCase(format)) { // xls����
+		if ("xls".equalsIgnoreCase(format)) { // xls
 			contentType = "application/vnd.ms-excel";
 			fileSuffix = ".xls";
 			exporter = new JRXlsExporter();
 			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
 			exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-		} else if ("pdf".equalsIgnoreCase(format)) { // pdf����
+		} else if ("pdf".equalsIgnoreCase(format)) { // pdf
 			contentType = "application/pdf";
 			fileSuffix = ".pdf";
 			exporter = new JRPdfExporter();
 			exporter.setParameter(JRPdfExporterParameter.CHARACTER_ENCODING, "UniGB-UCS2-H");
-		} else { // htmlҳ����ʾ
+		} else { // html
 			contentType = "text/html;charset=GBK";
 			download = false;
 			exporter = new JRHtmlExporter();
@@ -99,8 +99,7 @@ public class ReportFormController extends WebContentGenerator {
 
 		response.setContentType(contentType);
 
-		// String template = getServletContext().getRealPath("Report/jrxml/" +
-		// reportName);
+		// String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
 		String template = "testBlue";
 		System.out.println("template  " + template);
 		String jrxml = template + ".jrxml";// 模版
@@ -116,8 +115,7 @@ public class ReportFormController extends WebContentGenerator {
 		JRBaseFiller filler = JRFiller.createFiller(jasperReport);
 		JasperPrint print = filler.fill(parameters, conn);
 
-		// JasperPrint print = JasperFillManager.fillReport(jasper, parameters,
-		// conn);
+		// JasperPrint print = JasperFillManager.fillReport(jasper, parameters, conn);
 
 		conn.close();
 
