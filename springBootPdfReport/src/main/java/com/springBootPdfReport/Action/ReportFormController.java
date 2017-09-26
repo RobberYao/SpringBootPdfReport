@@ -101,14 +101,15 @@ public class ReportFormController extends WebContentGenerator {
 		response.setContentType(contentType);
 
 		//String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
-		
-		File template = ResourceUtils.getFile("classpath:jasper/testBlue.jrxml");
-		
-		//String template = "testBlue";
-		System.out.println("template  " + template);
-		String jrxml = template.getName();// 模版
-		String jasper = template.getName().replaceAll("[.][^.]+$", "") + ".jasper";// ?????
 
+		//String jrxml = template + ".jrxml";
+		//String jasper = template + ".jasper";
+
+		 File template = ResourceUtils.getFile("classpath:jasper/testBlue.jrxml");
+		 String jrxml = template.getPath();// 模版
+		 String jasper = template.getPath().replaceAll("[.][^.]+$", "") + ".jasper";// ?????
+
+		 System.out.println("template  " + template.getPath().replaceAll("[.][^.]+$", "") + ".jasper");
 		if (DEBUG || !new File(jasper).exists()) {
 			JasperCompileManager.compileReportToFile(jrxml, jasper);// 判断何意？
 		}
@@ -119,7 +120,8 @@ public class ReportFormController extends WebContentGenerator {
 		JRBaseFiller filler = JRFiller.createFiller(jasperReport);
 		JasperPrint print = filler.fill(parameters, conn);
 
-		// JasperPrint print = JasperFillManager.fillReport(jasper, parameters, conn);
+		// JasperPrint print = JasperFillManager.fillReport(jasper, parameters,
+		// conn);
 
 		conn.close();
 
