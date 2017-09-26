@@ -46,6 +46,9 @@ public class ReportFormController extends WebContentGenerator {
 
 	private boolean DEBUG = false;
 
+	
+	//Url：http://localhost:9081/rpt/testBlue?format=pdf
+	
 	@Autowired
 	private DataSource dataSource;
 
@@ -118,10 +121,9 @@ public class ReportFormController extends WebContentGenerator {
 		File sourceFile = new File(jasper);
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(sourceFile);// load什么东西？模版？
 		JRBaseFiller filler = JRFiller.createFiller(jasperReport);
-		JasperPrint print = filler.fill(parameters, conn);
+		//JasperPrint print = filler.fill(parameters, conn);
 
-		// JasperPrint print = JasperFillManager.fillReport(jasper, parameters,
-		// conn);
+		JasperPrint print = JasperFillManager.fillReport(jasper, parameters, conn);
 
 		conn.close();
 
