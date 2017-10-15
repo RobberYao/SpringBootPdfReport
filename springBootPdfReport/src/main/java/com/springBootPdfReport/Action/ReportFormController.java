@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.sql.Connection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
@@ -38,6 +39,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.WebContentGenerator;
 
+import com.springBootPdfReport.Model.LabDisplayParamter;
+import com.springBootPdfReport.Service.LabDisplayParamterService;
+
 @SuppressWarnings("deprecation")
 @Controller
 public class ReportFormController extends WebContentGenerator {
@@ -46,38 +50,51 @@ public class ReportFormController extends WebContentGenerator {
 
 	private boolean DEBUG = false;
 
-	
-	//Url：http://localhost:9081/rpt/testBlue?format=pdf
-	
+	// testUrl：http://localhost:9081/rpt/testBlue?format=pdf&tableName=lab_displayparamter0101&createdOn="2017-07-15
+	// 12:44:51"&stopEnd="2017-07-15 13:34:42"
+	// localhost:9081//tableName/lab_displayparamter0101/createdOn/"2017-07-15 12:44:51"/stopEnd/"2017-07-15 13:34:42"
 	@Autowired
 	private DataSource dataSource;
 
-	@RequestMapping(value = "/rpt/{reportName}")
+	@Autowired
+	private LabDisplayParamterService LabDisplayParamterService;
+
+	@RequestMapping(value = "/tableName/{tableName}/createdOn/{createdOn}/stopEnd/{stopEnd}")
 	public void generateReport(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			@PathVariable String reportName) throws Exception {
+			@PathVariable String tableName, 
+			@PathVariable String createdOn, 
+			@PathVariable String stopEnd) throws Exception {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		Enumeration<String> pNames = request.getParameterNames();
 
-		while (pNames.hasMoreElements()) {
-			String name = pNames.nextElement();
-			String value = request.getParameter(name);
+//		while (pNames.hasMoreElements()) {
+//			String name = pNames.nextElement();
+//			String value = request.getParameter(name);
+//
+//			if ("index".equals(name)) {
+//				int intValue = Integer.parseInt(value);
+//				if (intValue > 1)
+//					parameters.put(name, intValue);
+//			} else {
+//				parameters.put(name, value);
+//			}
+//		}
+		String format = "pdf";
+		// String tableName = (String) parameters.get("tableName");
+		// String tableName =tableName;
+		//String path = "classpath:jasper/" + tableName + ".jrxml";
+		// String createdOn = (String) parameters.get("createdOn");
+		// String stopEnd = (String) parameters.get("stopEnd");
 
-			if ("index".equals(name)) {
-				int intValue = Integer.parseInt(value);
-				if (intValue > 1)
-					parameters.put(name, intValue);
-			} else {
-				parameters.put(name, value);
-			}
-		}
+		String sql = "SELECT * FROM " + tableName + " WHERE CREATEDON BETWEEN " + createdOn + " AND " + stopEnd;
+		parameters.put("tableName", tableName);
+		parameters.put("createdOn", createdOn);
+		parameters.put("stopEnd", stopEnd);
 
-		String format = (String) parameters.get("format");
-
+		System.out.println(sql);
 		JRExporter exporter = null;
-
 		String contentType = "";
 		String fileSuffix = "";
-
 		boolean download = true;
 
 		if ("xls".equalsIgnoreCase(format)) { // xls
@@ -100,53 +117,44 @@ public class ReportFormController extends WebContentGenerator {
 		}
 
 		exporter.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF-8");
-
 		response.setContentType(contentType);
+		//File template = ResourceUtils.getFile(path);
+		
+		String template = getServletContext().getRealPath("Report/jrxml/" + tableName);
+		//String jrxml = template.getPath();// 模版
+		//String jasper = template.getPath().replaceAll("[.][^.]+$", "") + ".jasper";// ?????
 
-		//String template = getServletContext().getRealPath("Report/jrxml/" + reportName);
-
-		//String jrxml = template + ".jrxml";
-		//String jasper = template + ".jasper";
-
-		 File template = ResourceUtils.getFile("classpath:jasper/testBlue.jrxml");
-		 String jrxml = template.getPath();// 模版
-		 String jasper = template.getPath().replaceAll("[.][^.]+$", "") + ".jasper";// ?????
-
-		 System.out.println("template  " + template.getPath().replaceAll("[.][^.]+$", "") + ".jasper");
-		if (DEBUG || !new File(jasper).exists()) {
-			JasperCompileManager.compileReportToFile(jrxml, jasper);// 判断何意？
+		String jrxml = template + ".jrxml";
+		String jasper = template + ".jasper";
+		
+		System.out.println("jrxml: "+jrxml);
+		System.out.println("jasper: "+jasper);
+		//System.out.println("template  " + template.getPath().replaceAll("[.][^.]+$", "") + ".jasper");
+		if (!new File(jasper).exists()) {
+			JasperCompileManager.compileReportToFile(jrxml, jasper);//根据jrxml模版生成相应的jasper文件
 		}
-		Connection conn = dataSource.getConnection();// 连接数据库？连接jasper？
-
 		File sourceFile = new File(jasper);
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(sourceFile);// load什么东西？模版？
 		JRBaseFiller filler = JRFiller.createFiller(jasperReport);
-		//JasperPrint print = filler.fill(parameters, conn);
-
+		Connection conn = dataSource.getConnection();// 连接数据库？连接jasper？
 		JasperPrint print = JasperFillManager.fillReport(jasper, parameters, conn);
-
 		conn.close();
-
 		if (!download) {
 			JasperReportsUtils.render(exporter, print, response.getWriter());
 		} else {
 			response.setContentType("application/x-download");
-
 			StringBuilder header = new StringBuilder("attachment; filename=\"");
 			header.append(URLEncoder.encode(print.getName(), "UTF-8"));
-			header.append(parameters.get("startDate"));
+			header.append(parameters.get("createdOn"));
 			header.append("~");
-			header.append(parameters.get("endDate"));
+			header.append(parameters.get("stopEnd"));
 			header.append(fileSuffix);
 			header.append("\"");
 			response.setHeader("Content-Disposition", header.toString());
-
 			ByteArrayOutputStream baos = new ByteArrayOutputStream(OUTPUT_BYTE_ARRAY_INITIAL_SIZE);
 			JasperReportsUtils.render(exporter, print, baos);
-
 			response.setContentLength(baos.size());
 			ServletOutputStream out = response.getOutputStream();
-
 			baos.writeTo(out);
 			out.flush();
 			out.close();

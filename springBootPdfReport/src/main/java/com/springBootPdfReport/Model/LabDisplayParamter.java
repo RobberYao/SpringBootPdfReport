@@ -1,6 +1,5 @@
 package com.springBootPdfReport.Model;
 
-import java.util.Date;
 
 /**
  * LabDisplayParamter
