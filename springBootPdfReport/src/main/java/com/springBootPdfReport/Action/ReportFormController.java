@@ -41,8 +41,8 @@ public class ReportFormController extends WebContentGenerator {
 
 	private boolean DEBUG = false;
 
-	// localhost:9081/pdf?tableName=lab_displayparamter&createdOn="2016-07-15 12:44:51"&stopEnd="2018-07-15 13:34:42"
-	// localhost:9081/pdf/tableName/lab_displayparamter/createdOn/2016-07-15 12:44:51/stopEnd/2018-08-15 13:34:42"
+	// localhost:9081/pdf?tableName=lab_fdisplayparamter&createdOn="2016-07-15 12:44:51"&stopEnd="2018-07-15 13:34:42"
+	// localhost:9081/pdf/tableName/lab_fdisplayparamter/createdOn/2016-07-15 12:44:51/stopEnd/2018-08-15 13:34:42"
 	@Autowired
 	private DataSource dataSource;
 
