@@ -30,7 +30,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.jasperreports.JasperReportsUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.WebContentGenerator;
-import com.springBootPdfReport.Service.LabDisplayParamterService;
 import com.springBootPdfReport.Utils.DateUtils;
 
 
@@ -43,13 +42,9 @@ public class ReportFormController extends WebContentGenerator {
 	private boolean DEBUG = false;
 
 	// localhost:9081/pdf?tableName=lab_displayparamter&createdOn="2016-07-15 12:44:51"&stopEnd="2018-07-15 13:34:42"
-	// localhost:9081/tableName/lab_displayparamter/createdOn/2016-07-15
-	// 12:44:51/stopEnd/2018-08-15 13:34:42"
+	// localhost:9081/pdf/tableName/lab_displayparamter/createdOn/2016-07-15 12:44:51/stopEnd/2018-08-15 13:34:42"
 	@Autowired
 	private DataSource dataSource;
-
-	@Autowired
-	private LabDisplayParamterService LabDisplayParamterService;
 
 	// @RequestMapping(value =
 	// "/tableName/{tableName}/createdOn/{createdOn}/stopEnd/{stopEnd}")
