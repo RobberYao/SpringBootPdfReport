@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="基本类型电子保单" language="groovy" pageWidth="595" pageHeight="660" columnWidth="503" leftMargin="46" rightMargin="46" topMargin="45" bottomMargin="45" resourceBundle="com.picclife.i18n.edocument">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="201"/>
+	<property name="ireport.y" value="235"/>
 	<import value="com.siebre.util.EnumUtils"/>
 	<style name="def" isDefault="true" pattern="" fontName="微软雅黑" fontSize="10">
 		<box leftPadding="5" rightPadding="5"/>

@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lab_displayparamter0101" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lab_displayparamter" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.331000000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="tableName" class="java.lang.String"/>
-	<parameter name="createdOn" class="java.lang.String"/>
-	<parameter name="stopEnd" class="java.lang.String"/>
-	<parameter name="sql" class="java.lang.String"/>
+	<parameter name="createdOn" class="java.util.Date"/>
+	<parameter name="stopEnd" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[SELECT * FROM lab_displayparamter0101 WHERE CREATEDON BETWEEN $P{createdOn} AND $P{stopEnd}]]>
+		<![CDATA[SELECT INPUTPROBENUMBER ,CREATEDON,DISTEMPERATURE,DISHUMIDITY FROM lab_displayparamter WHERE CREATEDON BETWEEN $P{createdOn} AND $P{stopEnd}]]>
 	</queryString>
-	<field name="DISPROBENUMBER" class="java.lang.String"/>
-	<field name="CREATEDON" class="java.sql.Timestamp"/>
 	<field name="INPUTPROBENUMBER" class="java.lang.String"/>
+	<field name="CREATEDON" class="java.sql.Timestamp"/>
 	<field name="DISTEMPERATURE" class="java.lang.Double"/>
 	<field name="DISHUMIDITY" class="java.lang.Double"/>
 	<background>
@@ -78,7 +76,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="22">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
@@ -87,13 +85,14 @@
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DISPROBENUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{INPUTPROBENUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="114" y="0" width="157" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="14" isUnderline="false"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$F{CREATEDON}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="271" y="0" width="146" height="20"/>

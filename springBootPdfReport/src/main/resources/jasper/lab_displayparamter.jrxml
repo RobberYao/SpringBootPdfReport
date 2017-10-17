@@ -4,17 +4,18 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="tableName" class="java.lang.String"/>
-	<parameter name="createdOn" class="java.lang.String"/>
-	<parameter name="stopEnd" class="java.lang.String"/>
-	<parameter name="sql" class="java.lang.String"/>
+	<parameter name="createdOn" class="java.util.Date"/>
+	<parameter name="stopEnd" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[SELECT * FROM lab_displayparamter WHERE CREATEDON BETWEEN $P{createdOn} AND $P{stopEnd}]]>
+		<![CDATA[SELECT DISPROBENUMBER,CREATEDON,DISTEMPERATURE,DISHUMIDITY FROM lab_displayparamter WHERE CREATEDON BETWEEN $P{createdOn} AND $P{stopEnd}]]>
 	</queryString>
 	<field name="DISPROBENUMBER" class="java.lang.String"/>
 	<field name="CREATEDON" class="java.sql.Timestamp"/>
-	<field name="INPUTPROBENUMBER" class="java.lang.String"/>
 	<field name="DISTEMPERATURE" class="java.lang.Double"/>
 	<field name="DISHUMIDITY" class="java.lang.Double"/>
+	<variable name="dateFormate" class="java.text.DateFormat">
+		<variableExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")]]></variableExpression>
+	</variable>
 	<background>
 		<band/>
 	</background>
@@ -27,7 +28,7 @@
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[test]]></text>
+					<text><![CDATA[C.S.R]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF"/>
@@ -78,7 +79,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="136">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
@@ -89,15 +90,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DISPROBENUMBER}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="114" y="0" width="157" height="20"/>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd HH:mm:ss">
+				<reportElement x="114" y="0" width="182" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="14" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CREATEDON}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="271" y="0" width="146" height="20"/>
+				<reportElement x="296" y="0" width="121" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
@@ -118,17 +119,17 @@
 	<pageFooter>
 		<band height="17">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<reportElement mode="Opaque" x="0" y="0" width="375" height="17" backcolor="#E6E6E6"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<reportElement mode="Opaque" x="375" y="0" width="180" height="17" backcolor="#E6E6E6"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13"/>
+				<reportElement x="0" y="0" width="100" height="17"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
