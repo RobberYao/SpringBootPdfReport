@@ -7,12 +7,12 @@
 	<parameter name="createdOn" class="java.util.Date"/>
 	<parameter name="stopEnd" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[SELECT INPUTPROBENUMBER ,CREATEDON,DISTEMPERATURE,DISHUMIDITY FROM lab_displayparamter WHERE CREATEDON BETWEEN $P{createdOn} AND $P{stopEnd}]]>
+		<![CDATA[SELECT DISPROBENUMBER ,CREATEDON,DISTEMPERATURE,DISHUMIDITY FROM lab_displayparamter WHERE CREATEDON BETWEEN $P{createdOn} AND $P{stopEnd}]]>
 	</queryString>
-	<field name="INPUTPROBENUMBER" class="java.lang.String"/>
 	<field name="CREATEDON" class="java.sql.Timestamp"/>
 	<field name="DISTEMPERATURE" class="java.lang.Double"/>
 	<field name="DISHUMIDITY" class="java.lang.Double"/>
+	<field name="DISPROBENUMBER" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>
@@ -85,7 +85,7 @@
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{INPUTPROBENUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DISPROBENUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="114" y="0" width="157" height="20"/>
