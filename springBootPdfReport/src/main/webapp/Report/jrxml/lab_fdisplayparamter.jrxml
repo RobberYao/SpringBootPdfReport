@@ -87,7 +87,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DISPROBENUMBER}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss">
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd HH:mm:ss">
 				<reportElement x="114" y="0" width="157" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="14" isUnderline="false"/>
